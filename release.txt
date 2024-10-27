@@ -1,0 +1,11 @@
+docker buildx build --platform linux/amd64 -t sisapi-dev:latest . --load
+docker run -d -p 8000:8000 --name my-fastapi-container --env-file .env sisapi-dev:latest
+
+az login
+az acr login --name siscrdev
+
+docker tag sisapi-dev:latest siscrdev.azurecr.io/sisapi-dev:latest
+docker tag sisapi-dev:latest siscrdev.azurecr.io/sisapi-dev:0.0.2
+
+docker push siscrdev.azurecr.io/sisapi-dev:latest
+docker push siscrdev.azurecr.io/sisapi-dev:0.0.2
