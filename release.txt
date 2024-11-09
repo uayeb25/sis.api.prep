@@ -5,7 +5,7 @@ az login
 az acr login --name siscrdev
 
 docker tag sisapi-dev:latest siscrdev.azurecr.io/sisapi-dev:latest
-docker tag sisapi-dev:latest siscrdev.azurecr.io/sisapi-dev:0.0.2
+docker tag sisapi-dev:latest siscrdev.azurecr.io/sisapi-dev:0.0.6
 
 docker push siscrdev.azurecr.io/sisapi-dev:latest
-docker push siscrdev.azurecr.io/sisapi-dev:0.0.2
+docker push siscrdev.azurecr.io/sisapi-dev:0.0.6
