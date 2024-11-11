@@ -10,6 +10,7 @@ from fastapi import HTTPException
 
 from models.UserRegister import UserRegister
 from models.UserLogin import UserLogin
+from models.EmailActivation import EmailActivation
 
 import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
@@ -132,3 +133,20 @@ async def login_user_firebase(user: UserLogin):
             detail=f"Error al login usuario: {error_detail}"
         )
 
+
+async def generate_activation_code(email: EmailActivation):
+
+    code = random.randint(100000, 999999)
+    query = f" exec exampleprep.generate_activation_code @email = '{email.email}', @code = {code}"
+    result = {}
+    try:
+        result_json = await fetch_query_as_json(query, is_procedure=True)
+        result = json.loads(result_json)[0]
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return {
+        "message": "Código de activación generado exitosamente",
+        "code": code
+    }
